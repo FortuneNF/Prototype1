@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillBridge SA — Connect. Learn. Earn.</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0C0E13;--surf:#141720;--surf2:#1B1F2E;--bdr:rgba(255,255,255,0.08);--acc:#F5A623;--teal:#00D4AA;--text:#EDE8DF;--muted:#6B7280;--red:#E74C3C;--green:#2ECC71;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px;line-height:1.65;min-height:100vh;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:var(--fh);line-height:1.1;}
+h1{font-size:clamp(2.4rem,6vw,5rem);font-weight:800;}
+h2{font-size:clamp(1.7rem,3.5vw,2.8rem);font-weight:700;}
+h3{font-size:1.2rem;font-weight:700;}
+p{color:var(--muted);}
+a{color:var(--acc);text-decoration:none;}
+.container{max-width:1160px;margin:0 auto;padding:0 2rem;}
+.section{padding:5rem 0;}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(12,14,19,0.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--bdr);height:62px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;}
+.nav-logo{font-family:var(--fh);font-size:1.2rem;font-weight:800;color:var(--text);margin-right:1rem;white-space:nowrap;cursor:pointer;}
+.nav-logo span{color:var(--acc);}
+.nav-links{display:flex;gap:2px;flex:1;overflow-x:auto;}
+.nl{background:none;border:none;cursor:pointer;color:var(--muted);font-family:var(--fb);font-size:0.82rem;padding:0.35rem 0.65rem;border-radius:6px;transition:all 0.2s;white-space:nowrap;}
+.nl:hover{color:var(--text);background:rgba(255,255,255,0.05);}
+.nl.act{color:var(--acc);background:rgba(245,166,35,0.08);}
+.cart-btn{background:var(--acc);color:#000;border:none;cursor:pointer;font-family:var(--fb);font-weight:500;font-size:0.82rem;padding:0.4rem 1rem;border-radius:7px;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.cart-btn:hover{background:#d98f1a;}
+/* BTNS */
+.btn{display:inline-block;padding:0.7rem 1.6rem;border-radius:8px;font-family:var(--fb);font-weight:500;font-size:0.9rem;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-p{background:var(--acc);color:#000;}.btn-p:hover{background:#d98f1a;transform:translateY(-1px);}
+.btn-o{background:transparent;color:var(--text);border:1px solid var(--bdr);}.btn-o:hover{border-color:var(--acc);color:var(--acc);}
+.btn-sm{padding:0.45rem 1rem;font-size:0.82rem;}
+/* CARDS */
+.card{background:var(--surf);border:1px solid var(--bdr);border-radius:12px;padding:1.5rem;transition:border-color 0.2s;}
+.card:hover{border-color:rgba(245,166,35,0.25);}
+/* BADGE */
+.badge{display:inline-block;font-size:0.72rem;font-weight:600;padding:0.2rem 0.55rem;border-radius:20px;background:rgba(245,166,35,0.14);color:var(--acc);}
+.badge-teal{background:rgba(0,212,170,0.12);color:var(--teal);}
+.badge-green{background:rgba(46,204,113,0.12);color:var(--green);}
+/* AVATAR */
+.av{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:700;font-size:0.85rem;color:#000;flex-shrink:0;}
+/* GRID */
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.25rem;}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.5rem;}
+/* FORM */
+.fg{margin-bottom:1rem;}
+.fl{display:block;font-size:0.82rem;color:var(--muted);margin-bottom:0.35rem;}
+.fi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--bdr);border-radius:8px;padding:0.6rem 0.85rem;color:var(--text);font-family:var(--fb);font-size:0.88rem;transition:border 0.2s;}
+.fi:focus{outline:none;border-color:var(--acc);}
+.fi.err{border-color:var(--red);}
+.em{font-size:0.78rem;color:var(--red);margin-top:0.2rem;}
+/* STAT */
+.sn{font-family:var(--fh);font-size:2.4rem;font-weight:800;color:var(--acc);line-height:1;}
+/* SECTION LABEL */
+.sl{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--acc);margin-bottom:0.6rem;}
+/* DIVIDER */
+.dv{height:1px;background:var(--bdr);margin:2rem 0;}
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:0.83rem;}
+th,td{padding:0.65rem 0.9rem;text-align:left;border-bottom:1px solid var(--bdr);}
+th{color:var(--acc);font-weight:600;background:rgba(245,166,35,0.05);font-family:var(--fh);}
+td{color:var(--muted);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{color:var(--text);}
+/* CODE */
+.cb{background:var(--bg);border:1px solid var(--bdr);border-left:3px solid var(--acc);border-radius:8px;padding:1.25rem 1.5rem;font-family:'Courier New',monospace;font-size:0.8rem;color:#a8dba8;line-height:1.9;white-space:pre-wrap;overflow-x:auto;}
+/* TERMINAL */
+.term{background:#060810;border:1px solid var(--bdr);border-radius:10px;overflow:hidden;}
+.term-hdr{background:var(--surf);padding:0.5rem 1rem;display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--muted);}
+.term-hdr::before{content:'● ● ●';color:#555;letter-spacing:4px;}
+.term-body{padding:1rem;min-height:180px;max-height:260px;overflow-y:auto;font-family:'Courier New',monospace;font-size:0.82rem;line-height:1.8;}
+.term-body p{color:#7ec8a0;margin:0;}
+.term-body p.err{color:#e74c3c;}
+.term-body p.info{color:#5b9bd5;}
+.term-body p.hdr{color:var(--acc);font-weight:bold;}
+.term-input-row{display:flex;border-top:1px solid var(--bdr);}
+.term-prompt{padding:0.6rem 0.8rem;color:var(--acc);font-family:'Courier New',monospace;font-size:0.82rem;background:#060810;}
+.term-in{flex:1;background:#060810;border:none;color:#fff;font-family:'Courier New',monospace;font-size:0.82rem;padding:0.6rem 0.4rem;outline:none;}
+.term-sub{background:var(--acc);color:#000;border:none;padding:0.6rem 1rem;font-size:0.82rem;cursor:pointer;font-weight:600;}
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;}
+.ov.open{display:flex;}
+.mo{background:var(--surf);border:1px solid var(--bdr);border-radius:14px;padding:2rem;width:90%;max-width:460px;position:relative;}
+.mo-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.3rem;line-height:1;}
+/* CART */
+.cp{position:fixed;top:62px;right:0;bottom:0;width:340px;background:var(--surf);border-left:1px solid var(--bdr);z-index:1500;transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column;}
+.cp.open{transform:translateX(0);}
+.cp-hdr{padding:1.25rem 1.5rem;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;}
+.cp-body{flex:1;overflow-y:auto;padding:1rem 1.5rem;}
+.cp-ftr{padding:1.25rem 1.5rem;border-top:1px solid var(--bdr);}
+.ci{display:flex;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid var(--bdr);align-items:center;}
+.ci:last-child{border-bottom:none;}
+.ci-info{flex:1;}
+.ci-rm{background:none;border:none;cursor:pointer;color:var(--red);font-size:1rem;}
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--surf2);border:1px solid var(--acc);border-radius:10px;padding:0.8rem 1.2rem;font-size:0.875rem;color:var(--text);z-index:3000;transform:translateY(80px);opacity:0;transition:all 0.35s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:62px;}
+.hp{position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,0.035) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;}
+.h-glow{position:absolute;top:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(245,166,35,0.08) 0%,transparent 65%);pointer-events:none;}
+/* STEPS */
+.step-num{width:36px;height:36px;border-radius:50%;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:700;font-size:0.85rem;color:var(--acc);flex-shrink:0;}
+/* PERSONA */
+.pc{background:linear-gradient(135deg,var(--surf),var(--surf2));border:1px solid rgba(245,166,35,0.2);border-radius:16px;padding:2rem;max-width:380px;}
+.pa{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--teal));display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:1.4rem;color:#000;margin-bottom:1rem;}
+.ps{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--bdr);font-size:0.85rem;}
+.ps:last-child{border-bottom:none;}
+.ps span:first-child{color:var(--muted);}
+.ps span:last-child{color:var(--text);font-weight:500;}
+/* TIER */
+.tc{background:var(--surf);border:1px solid var(--bdr);border-radius:12px;padding:1.75rem;text-align:center;}
+.tc.feat{border-color:var(--acc);background:rgba(245,166,35,0.05);}
+.tp{font-family:var(--fh);font-size:2.6rem;font-weight:800;color:var(--text);line-height:1;margin:0.75rem 0 0.2rem;}
+.tp span{font-size:1rem;color:var(--muted);font-weight:400;}
+.tf{text-align:left;margin-top:1rem;font-size:0.84rem;color:var(--muted);}
+.tf li{padding:0.3rem 0;border-bottom:1px solid var(--bdr);}
+.tf li:last-child{border-bottom:none;}
+/* RATING STARS */
+.stars{color:var(--acc);font-size:0.82rem;letter-spacing:1px;}
+/* PAGE FADE */
+.page{animation:pf 0.28s ease;}
+@keyframes pf{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+@media(max-width:760px){.nav-links{display:none;}.g2{grid-template-columns:1fr;}.cp{width:100%;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="nav('home')">Skill<span>Bridge</span> SA</div>
+  <div class="nav-links">
+    <button class="nl act" data-page="home" onclick="nav('home')">Home</button>
+    <button class="nl" data-page="services" onclick="nav('services')">Marketplace</button>
+    <button class="nl" data-page="about" onclick="nav('about')">About</button>
+    <button class="nl" data-page="persona" onclick="nav('persona')">Customer Persona</button>
+    <button class="nl" data-page="revenue" onclick="nav('revenue')">Revenue Model</button>
+    <button class="nl" data-page="analytics" onclick="nav('analytics')">Analytics</button>
+    <button class="nl" data-page="java" onclick="nav('java')">Java Logic</button>
+    <button class="nl" data-page="contact" onclick="nav('contact')">Contact</button>
+  </div>
+  <button class="cart-btn" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+</nav>
+
+<!-- APP -->
+<div id="app"></div>
+
+<!-- CART PANEL -->
+<div class="cp" id="cartPanel">
+  <div class="cp-hdr">
+    <h3 style="font-size:1rem;">Your Bookings</h3>
+    <button onclick="toggleCart()" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;">✕</button>
+  </div>
+  <div class="cp-body" id="cartBody"><p style="color:var(--muted);font-size:0.85rem;text-align:center;margin-top:2rem;">No sessions booked yet.</p></div>
+  <div class="cp-ftr">
+    <div style="display:flex;justify-content:space-between;margin-bottom:1rem;">
+      <span style="color:var(--muted);font-size:0.9rem;">Subtotal</span>
+      <strong id="cart-total" style="font-family:var(--fh);">R 0</strong>
+    </div>
+    <p style="font-size:0.75rem;color:var(--muted);margin-bottom:0.75rem;">Subscription (R99/mo) billed separately. 10% platform fee included.</p>
+    <button class="btn btn-p" style="width:100%;" onclick="checkout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="ov" id="bookModal">
+  <div class="mo">
+    <button class="mo-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== DATA ==========
+const TUTORS = [
+  {id:1,name:'Thabo Nkosi',initials:'TN',subject:'Mathematics',grade:'Gr 11/12 & 1st Year',rate:80,rating:4.9,sessions:142,bg:'#F5A623',tx:'#000'},
+  {id:2,name:'Amara Dlamini',initials:'AD',subject:'Java Programming',grade:'Beginner → Advanced',rate:120,rating:4.8,sessions:89,bg:'#00D4AA',tx:'#000'},
+  {id:3,name:'Kefilwe Mokoena',initials:'KM',subject:'Physical Sciences',grade:'Gr 11 & Gr 12',rate:90,rating:4.7,sessions:67,bg:'#A78BFA',tx:'#000'},
+  {id:4,name:'Sipho Zulu',initials:'SZ',subject:'English & Communication',grade:'All levels',rate:60,rating:4.6,sessions:203,bg:'#F472B6',tx:'#000'},
+  {id:5,name:'Naledi Sithole',initials:'NS',subject:'Accounting & Finance',grade:'Gr 10–12',rate:100,rating:4.9,sessions:118,bg:'#34D399',tx:'#000'},
+  {id:6,name:'Lwazi Cele',initials:'LC',subject:'Chemistry',grade:'Gr 11/12 & 1st Year',rate:85,rating:4.5,sessions:54,bg:'#FB923C',tx:'#000'},
+];
+const CASES = [
+  {name:'Superprof',origin:'Global (inc. SA)',model:'20% commission per session',users:'7 million+',learn:'Peer-to-peer tutoring has proven global demand; SA arm confirmed local appetite.'},
+  {name:'Teachable',origin:'USA',model:'Subscription + transaction fee',users:'100K+ creators',learn:'Non-technical users can monetise knowledge with no-code tools — lowering the barrier.'},
+  {name:'UrbanTutor',origin:'South Africa',model:'Commission per booking',users:'5 000+ tutors',learn:'SA students and parents actively seek digital alternatives to private tutoring agencies.'},
+  {name:'Skooli',origin:'Canada',model:'Pay-per-minute live sessions',users:'50 000+ students',learn:'Flexible micro-pricing removes financial barriers for cost-sensitive demographics.'},
+  {name:'Snaptutor',origin:'South Africa',model:'Free listings + premium R199/mo',users:'3 000+ SA tutors',learn:'Average SA session rate of R150–R500/hr shows strong willingness to pay online.'},
+];
+const MONTHS = ['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12'];
+const SUBS   = [50,95,160,240,330,430,520,610,690,750,790,820];
+const REVENUE= [5400,9900,16200,23800,32400,43500,52600,62300,70500,77200,81800,85400];
+const SESSIONS=[120,230,380,570,780,1020,1240,1470,1660,1810,1920,2000];
+
+// ========== STATE ==========
+// ========== BACKEND CONFIG ==========
+const API = 'http://localhost:8080';
+
+const TUTOR_META = {
+  1:{initials:'TN',bg:'#F5A623'}, 2:{initials:'AD',bg:'#00D4AA'},
+  3:{initials:'KM',bg:'#A78BFA'}, 4:{initials:'SZ',bg:'#F472B6'},
+  5:{initials:'NS',bg:'#34D399'}, 6:{initials:'LC',bg:'#FB923C'},
+};
+
+async function apiGet(path) {
+  try {
+    const res = await fetch(API + path);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } catch(e) { console.error('GET failed:', path, e); return null; }
+}
+
+async function apiPost(path, body) {
+  try {
+    const res = await fetch(API + path, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    });
+    return await res.json();
+  } catch(e) { return {error:true, message:'Cannot reach Java server. Is it running on port 8080?'}; }
+}
+
+function offlineBanner() {
+  return `<div style="background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.3);
+    border-radius:10px;padding:1.5rem;text-align:center;margin:2rem 0;">
+    <div style="font-size:1.5rem;margin-bottom:0.5rem;">⚠️</div>
+    <strong style="color:#e74c3c;">Java server not running</strong>
+    <p style="font-size:0.85rem;margin-top:0.4rem;">Open your terminal in C:\SkillBridge and run:<br>
+    <code style="background:rgba(0,0,0,0.3);padding:0.2rem 0.5rem;border-radius:4px;">java SkillBridgeServer</code></p>
+  </div>`;
+}
+
+let TUTORs = [];
+let cart = [];
+let cartOpen = false;
+let charts = {};
+
+// ========== NAV ==========
+function nav(page) {
+  document.querySelectorAll('.nl').forEach(b=>{
+    b.classList.toggle('act', b.dataset.page === page);
+  });
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'page';
+  div.innerHTML = getPage(page);
+  app.appendChild(div);
+  if (page === 'analytics') { setTimeout(()=>loadAnalyticsPage(div), 10); }
+  else if (page === 'java') setTimeout(initTerminal, 50);
+  window.scrollTo(0,0);
+}
+
+// ========== PAGES ==========
+function getPage(p) {
+  switch(p) {
+    case 'home': return homePage();
+    case 'services': return servicesPage();
+    case 'about': return aboutPage();
+    case 'persona': return personaPage();
+    case 'revenue': return revenuePage();
+    // analytics handled async by loadAnalyticsPage
+    case 'java': return javaPage();
+    case 'contact': return contactPage();
+    default: return homePage();
+  }
+}
+
+function homePage() {
+  return `
+  <section class="hero">
+    <div class="hp"></div>
+    <div class="h-glow"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div style="max-width:720px;">
+        <div class="sl">🇿🇦 Digital Entrepreneurship for Sustainable Community Development</div>
+        <h1>South Africa's<br><span style="color:var(--acc);">Student Skills</span><br>Marketplace</h1>
+        <p style="font-size:1.1rem;margin:1.5rem 0 2rem;max-width:540px;">SkillBridge SA connects university and TVET students with verified peer tutors. Affordable. Accessible. Empowering communities through digital entrepreneurship.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <button class="btn btn-p" onclick="nav('services')">Browse Tutors</button>
+          <button class="btn btn-o" onclick="nav('about')">Our Story</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--bdr);">
+          <div><div class="sn">820+</div><p style="font-size:0.82rem;margin-top:0.3rem;">Active subscribers</p></div>
+          <div><div class="sn">R85K</div><p style="font-size:0.82rem;margin-top:0.3rem;">Monthly revenue (Yr 1)</p></div>
+          <div><div class="sn">6</div><p style="font-size:0.82rem;margin-top:0.3rem;">Subjects available</p></div>
+          <div><div class="sn">4.7★</div><p style="font-size:0.82rem;margin-top:0.3rem;">Average tutor rating</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="sl">How it works</div>
+      <h2 style="margin-bottom:2.5rem;">Three steps to your first session</h2>
+      <div class="g3">
+        ${['Browse & choose a tutor by subject, rating and hourly rate.','Book a session — pick your date, duration and pay securely online.','Learn and grow — rate your tutor and track your progress over time.']
+          .map((t,i)=>`<div class="card" style="display:flex;gap:1rem;align-items:flex-start;">
+            <div class="step-num">${i+1}</div>
+            <div><p style="color:var(--text);font-size:0.92rem;">${t}</p></div>
+          </div>`).join('')}
+      </div>
+      <div class="dv"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <h3>Ready to start learning?</h3>
+          <p style="font-size:0.9rem;">Subscribe from R99/month. Cancel anytime.</p>
+        </div>
+        <button class="btn btn-p" onclick="nav('services')">View All Tutors →</button>
+      </div>
+    </div>
+  </section>`;
+}
+
+function servicesPage() {
+  return `
+  <div style="padding-top:80px;">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="sl">Marketplace</div>
+      <h2 style="margin-bottom:0.5rem;">Find your tutor</h2>
+      <p style="margin-bottom:2rem;">All tutors are verified students with proven academic records. Rates are per hour.</p>
+      <div class="g3">
+        ${TUTORS.map(t=>`
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:0.9rem;margin-bottom:1rem;">
+            <div class="av" style="background:${t.bg};color:${t.tx};">${t.initials}</div>
+            <div>
+              <div style="font-weight:600;font-size:0.95rem;">${t.name}</div>
+              <div class="stars">${'★'.repeat(Math.floor(t.rating))} <span style="color:var(--muted);font-size:0.78rem;">${t.rating}</span></div>
+            </div>
+          </div>
+          <span class="badge" style="margin-bottom:0.6rem;">${t.subject}</span>
+          <p style="font-size:0.82rem;margin:0.3rem 0 0.1rem;">${t.grade}</p>
+          <p style="font-size:0.78rem;margin-bottom:1rem;">${t.sessions} sessions completed</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="font-family:var(--fh);color:var(--text);">R${t.rate}<span style="font-size:0.75rem;font-weight:400;color:var(--muted);">/hr</span></strong>
+            <button class="btn btn-p btn-sm" onclick="openBookModal(${t.id})">Book Session</button>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+  </section>
+  </div>`;
+}
+
+function aboutPage() {
+  return `
+  <div style="padding-top:80px;">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="sl">About SkillBridge SA</div>
+      <h2 style="margin-bottom:1rem;">The problem we solve</h2>
+      <div class="g2" style="margin-bottom:3rem;">
+        <div class="card" style="border-color:rgba(231,76,60,0.3);">
+          <span class="badge" style="background:rgba(231,76,60,0.12);color:#e74c3c;margin-bottom:1rem;">The Problem</span>
+          <p>Private tutoring in South Africa averages <strong style="color:var(--text);">R400–R600/hr</strong> — inaccessible to most students. Talented peers with top marks cannot monetise their knowledge. The gap between those who can afford extra help and those who cannot is widening.</p>
+        </div>
+        <div class="card" style="border-color:rgba(0,212,170,0.3);">
+          <span class="badge badge-teal" style="margin-bottom:1rem;">Our Solution</span>
+          <p>SkillBridge SA is a <strong style="color:var(--text);">peer-to-peer digital marketplace</strong> where verified student tutors offer sessions from <strong style="color:var(--acc);">R50–R120/hr</strong>. A R99/month subscription unlocks unlimited browsing, instant booking, and progress tracking.</p>
+        </div>
+      </div>
+
+      <div class="dv"></div>
+      <div class="sl" style="margin-top:2rem;">Research — 5 Case Studies</div>
+      <h2 style="margin-bottom:1.5rem;">Businesses we investigated</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        ${CASES.map((c,i)=>`
+        <div class="card" style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+          <div style="flex-shrink:0;">
+            <div style="font-family:var(--fh);font-size:1.5rem;font-weight:800;color:var(--acc);">${String(i+1).padStart(2,'0')}</div>
+          </div>
+          <div style="flex:1;min-width:200px;">
+            <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.4rem;">
+              <strong>${c.name}</strong>
+              <span class="badge">${c.origin}</span>
+              <span class="badge badge-teal">${c.model}</span>
+            </div>
+            <p style="font-size:0.82rem;"><strong style="color:var(--muted);">Users:</strong> ${c.users}</p>
+            <p style="font-size:0.84rem;margin-top:0.3rem;">${c.learn}</p>
+          </div>
+        </div>`).join('')}
+      </div>
+
+      <div class="dv"></div>
+      <div style="background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:2rem;">
+        <div class="sl">2-Minute Elevator Pitch</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:0.5rem;">
+          ${[['🔴 Problem','South African students cannot afford private tutoring at R400–R600/hr.'],
+             ['🟢 Solution','A digital peer marketplace where verified students teach each other from R50/hr.'],
+             ['🎯 Who it\'s for','18–25 year-old SA university and TVET College students on data-limited budgets.'],
+             ['🤖 AI advantage','AI chatbot matches students to the right tutor; no-code automation handles booking confirmations and reminders.']
+          ].map(([t,d])=>`<div><strong style="color:var(--text);font-size:0.9rem;">${t}</strong><p style="font-size:0.84rem;margin-top:0.3rem;">${d}</p></div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>`;
+}
+
+function personaPage() {
+  return `
+  <div style="padding-top:80px;">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="sl">Customer Persona</div>
+      <h2 style="margin-bottom:0.5rem;">Who we build for</h2>
+      <p style="margin-bottom:2.5rem;">Research-based profile of our primary target user, drawn from our 5 case-study findings.</p>
+      <div class="g2">
+        <div class="pc">
+          <div class="pa">LM</div>
+          <h3 style="margin-bottom:0.25rem;">Lerato Mokoena</h3>
+          <p style="font-size:0.85rem;margin-bottom:1.5rem;">The Struggling First-Year Student</p>
+          <div>
+            ${[['Age','19 years old'],
+               ['Study','BSc Engineering, TUT Pretoria'],
+               ['Location','Soshanguve, Gauteng'],
+               ['Monthly budget','R800 (after transport & data)'],
+               ['Challenge','Failing Maths 1 — cannot afford R400/hr private tutor'],
+               ['Tech access','Android smartphone, 1GB data/day'],
+               ['Goal','Pass Maths 1 with 60%+ and avoid academic exclusion']
+            ].map(([k,v])=>`<div class="ps"><span>${k}</span><span>${v}</span></div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:1.25rem;">
+            <h3 style="font-size:0.95rem;margin-bottom:0.75rem;color:var(--acc);">Pain points</h3>
+            ${['Private tutoring is unaffordable at R400–R600/hr.','Tutoring agencies require in-person attendance she cannot afford (transport R35 each way).','YouTube is free but impersonal — she needs someone who can answer back.','She is embarrassed to ask lecturers for extra help.']
+              .map(p=>`<p style="font-size:0.84rem;padding:0.4rem 0;border-bottom:1px solid var(--bdr);">— ${p}</p>`).join('')}
+          </div>
+          <div class="card">
+            <h3 style="font-size:0.95rem;margin-bottom:0.75rem;color:var(--teal);">How SkillBridge SA helps</h3>
+            ${['She pays R99/month (less than one private lesson).','She books Thabo (Maths, R80/hr) for 3 sessions via WhatsApp-style chat.','Sessions happen online — no transport cost.','She tracks her progress and rates her tutor after every session.']
+              .map(p=>`<p style="font-size:0.84rem;padding:0.4rem 0;border-bottom:1px solid var(--bdr);">✓ ${p}</p>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>`;
+}
+
+function revenuePage() {
+  return `
+  <div style="padding-top:80px;">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="sl">Revenue Model</div>
+      <h2 style="margin-bottom:0.5rem;">How SkillBridge SA makes money</h2>
+      <p style="margin-bottom:2.5rem;">Three revenue streams, balanced to keep sessions affordable while covering costs.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem;margin-bottom:3rem;">
+        <div class="tc">
+          <span class="badge">Stream 1</span>
+          <div class="tp">R99<span>/month</span></div>
+          <strong style="font-size:0.9rem;">Student Subscription</strong>
+          <ul class="tf">
+            <li>Unlimited tutor browsing</li>
+            <li>Priority booking access</li>
+            <li>Progress tracking dashboard</li>
+            <li>Message up to 5 tutors/mo</li>
+          </ul>
+          <button class="btn btn-o btn-sm" style="margin-top:1.25rem;width:100%;" onclick="openBookModal(1)">Start subscription</button>
+        </div>
+        <div class="tc feat">
+          <span class="badge">Stream 2 — Primary</span>
+          <div class="tp">10%<span> commission</span></div>
+          <strong style="font-size:0.9rem;">Session Commission</strong>
+          <ul class="tf">
+            <li>Charged on every session booked</li>
+            <li>Tutor receives 90% of rate</li>
+            <li>Covers platform + payment processing</li>
+            <li>Auto-deducted at checkout</li>
+          </ul>
+          <p style="font-size:0.78rem;margin-top:1rem;color:var(--acc);">★ Highest revenue potential at scale</p>
+        </div>
+        <div class="tc">
+          <span class="badge badge-teal">Stream 3</span>
+          <div class="tp">R199<span>/month</span></div>
+          <strong style="font-size:0.9rem;">Tutor Premium Listing</strong>
+          <ul class="tf">
+            <li>Featured placement in search</li>
+            <li>Verified badge on profile</li>
+            <li>Analytics on profile views</li>
+            <li>Priority customer support</li>
+          </ul>
+          <button class="btn btn-o btn-sm" style="margin-top:1.25rem;width:100%;">Upgrade profile</button>
+        </div>
+      </div>
+
+      <div class="dv"></div>
+      <h3 style="margin-bottom:1.5rem;">Year 1 Financial Projections</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+        ${[['R85 400','Projected Month-12 Revenue'],
+           ['R79 200','Subscription revenue (820 × R99)'],
+           ['R 7 500','Session commission (Month 12)'],
+           ['R 2 700','Cost-Benefit Ratio (Revenue ÷ Cost)']
+        ].map(([v,l])=>`<div style="background:var(--surf2);border-radius:10px;padding:1.25rem;">
+          <div style="font-family:var(--fh);font-size:1.6rem;font-weight:800;color:var(--acc);">${v}</div>
+          <p style="font-size:0.8rem;margin-top:0.25rem;">${l}</p>
+        </div>`).join('')}
+      </div>
+
+      <div class="card" style="margin-top:1.5rem;">
+        <h3 style="font-size:0.95rem;margin-bottom:1rem;color:var(--acc);">No-code &amp; AI tools integrated</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;font-size:0.84rem;">
+          ${[['Zapier (no-code)','Automates booking confirmation emails and tutor payment notifications — zero custom code needed.'],
+             ['Tidio AI Chatbot','Answers "Which tutor is best for me?" questions 24/7 — reducing manual support load by ~60%.'],
+             ['Stripe Payments','Handles all transactions with built-in fraud protection and South African Rand support.'],
+             ['Calendly Integration','Tutors sync their availability in 2 minutes; students book slots without WhatsApp back-and-forth.']
+          ].map(([n,d])=>`<div class="card"><strong style="font-size:0.85rem;">${n}</strong><p style="font-size:0.8rem;margin-top:0.35rem;">${d}</p></div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>`;
+}
+
+// analyticsPage replaced by async loadAnalyticsPage below
+
+async function loadAnalyticsPage(div) {
+  div.innerHTML = `<div style="padding-top:80px;"><section class="section" style="padding-top:3rem;"><div class="container">
+    <div class="sl">Analytics &amp; Data</div>
+    <h2 style="margin-bottom:0.5rem;">Live Platform Statistics</h2>
+    <p style="font-size:0.85rem;margin-bottom:1.5rem;">All numbers start at zero. Every completed checkout updates these figures in real time.</p>
+    <div id="analytics-content"><p style="color:var(--muted);">Loading from Java backend...</p></div>
+  </div></section></div>`;
+  await renderAnalytics();
+}
+
+async function renderAnalytics() {
+  const data = await apiGet('/api/analytics');
+  const el = document.getElementById('analytics-content');
+  if (!el) return;
+  if (!data) { el.innerHTML = offlineBanner(); return; }
+
+  const live   = data.live;
+  const s      = data.stats;
+  const cb     = data.costBenefit;
+  const demand = data.subjectDemand;
+  const orders = data.recentOrders || [];
+  const hasPurchases = live.totalCheckouts > 0;
+
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:1rem;margin-bottom:2rem;">
+      ${[['R'+live.totalRevenue.toFixed(2),'Total Revenue','#F5A623'],
+         [live.totalSubscribers,'Subscribers','#00D4AA'],
+         [live.totalSessionsBooked,'Sessions Booked','#A78BFA'],
+         [live.totalCheckouts,'Orders Placed','#F472B6'],
+         ['R'+live.sessionRevenue.toFixed(2),'Session Revenue','#34D399'],
+         ['R'+live.subscriptionRevenue.toFixed(2),'Subscription Revenue','#FB923C'],
+        ].map(([v,l,c])=>`<div style="background:var(--surf2);border:1px solid var(--bdr);border-radius:10px;padding:1.25rem;text-align:center;">
+          <div style="font-family:var(--fh);font-size:1.5rem;font-weight:800;color:${c};line-height:1;">${v}</div>
+          <p style="font-size:0.76rem;margin-top:0.35rem;">${l}</p>
+        </div>`).join('')}
+    </div>
+
+    ${!hasPurchases ? `<div style="background:rgba(245,166,35,0.06);border:1px dashed rgba(245,166,35,0.3);
+      border-radius:12px;padding:2rem;text-align:center;margin-bottom:2rem;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">📊</div>
+      <h3 style="font-size:1rem;margin-bottom:0.5rem;">No purchases yet — all stats are at zero</h3>
+      <p style="font-size:0.85rem;">Go to the <button onclick="nav('services')" style="background:none;border:none;
+        color:var(--acc);cursor:pointer;font-size:0.85rem;text-decoration:underline;">Marketplace</button>,
+        book a session and complete checkout. The charts will update immediately.</p>
+    </div>` : ''}
+
+    <div class="g2" style="margin-bottom:1.5rem;">
+      <div class="card">
+        <h3 style="font-size:0.95rem;margin-bottom:0.25rem;">Revenue Breakdown</h3>
+        <p style="font-size:0.78rem;margin-bottom:1rem;">Session vs subscription income</p>
+        <div style="position:relative;height:220px;"><canvas id="revenueChart"></canvas></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:0.95rem;margin-bottom:0.25rem;">Subject Demand</h3>
+        <p style="font-size:0.78rem;margin-bottom:1rem;">Live bookings per subject</p>
+        <div style="position:relative;height:220px;"><canvas id="demandChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h3 style="font-size:0.95rem;margin-bottom:1rem;">Elementary Statistics — calculated by Java</h3>
+      <table><thead><tr><th>Metric</th><th>Value</th><th>Calculation</th></tr></thead>
+      <tbody>
+        <tr><td>Mean hourly rate (all tutors)</td>
+            <td style="color:var(--acc);">R${s.meanHourlyRate}</td><td>Sum ÷ 6 tutors</td></tr>
+        <tr><td>Median hourly rate</td>
+            <td style="color:var(--acc);">R${s.medianHourlyRate}</td><td>Bubble sort → middle</td></tr>
+        <tr><td>Range of hourly rates</td>
+            <td style="color:var(--acc);">R${s.rangeHourlyRate} (R${s.minRate}–R${s.maxRate})</td><td>Max − Min</td></tr>
+        <tr><td>Mean sessions per subscriber</td>
+            <td style="color:var(--acc);">${s.meanSessionsPerSub}</td>
+            <td>${live.totalSessionsBooked} sessions ÷ ${live.totalSubscribers} subs</td></tr>
+        <tr><td>Total revenue (live)</td>
+            <td style="color:var(--acc);">R${live.totalRevenue.toFixed(2)}</td><td>All completed checkouts</td></tr>
+        <tr><td>Net profit</td>
+            <td style="color:${cb.netProfit>=0?'var(--green)':'var(--red)'};">R${cb.netProfit.toFixed(2)}</td>
+            <td>Revenue − costs</td></tr>
+        <tr><td>Cost-benefit ratio</td>
+            <td style="color:var(--acc);">${cb.costBenefitRatio}</td><td>Revenue ÷ total costs</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h3 style="font-size:0.95rem;margin-bottom:1rem;">Cost-Benefit Analysis (live)</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;">
+        ${[['Total Revenue','R'+cb.totalRevenue.toFixed(2),'#F5A623'],
+           ['Hosting Costs','R'+cb.hostingCost.toFixed(2),'#6B7280'],
+           ['Marketing Costs','R'+cb.marketingCost.toFixed(2),'#6B7280'],
+           ['Payment Fees 2.9%','R'+cb.paymentFees.toFixed(2),'#6B7280'],
+           ['Total Costs','R'+cb.totalCost.toFixed(2),'#e74c3c'],
+           ['Net Profit','R'+cb.netProfit.toFixed(2),cb.netProfit>=0?'#2ecc71':'#e74c3c'],
+          ].map(([l,v,c])=>`<div style="background:var(--surf2);border-radius:8px;padding:0.9rem;">
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:0.2rem;">${l}</p>
+            <div style="font-family:var(--fh);font-size:1.2rem;font-weight:700;color:${c};">${v}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h3 style="font-size:0.95rem;">Recent Orders</h3>
+        <button class="btn btn-o btn-sm" onclick="renderAnalytics()">↻ Refresh</button>
+      </div>
+      ${orders.length===0
+        ? '<p style="color:var(--muted);font-size:0.85rem;text-align:center;padding:1rem;">No orders yet.</p>'
+        : `<table><thead><tr><th>Reference</th><th>Student</th><th>Sessions</th><th>Total</th></tr></thead>
+           <tbody>${orders.map(o=>`<tr>
+             <td style="color:var(--acc);font-family:var(--fh);font-size:0.82rem;">${o.reference}</td>
+             <td>${o.student}</td><td style="text-align:center;">${o.sessions}</td>
+             <td style="color:var(--green);">R${Number(o.total).toFixed(2)}</td>
+           </tr>`).join('')}</tbody></table>`}
+    </div>`;
+
+  setTimeout(()=>initCharts(live, demand), 50);
+}
+
+
+function javaPage() {
+  return `
+  <div style="padding-top:80px;">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="sl">Java Logic</div>
+      <h2 style="margin-bottom:0.5rem;">Program design &amp; implementation</h2>
+      <p style="margin-bottom:2.5rem;">The back-end logic of SkillBridge SA, designed with pseudocode and implemented in Java. An interactive terminal simulation is included below.</p>
+
+      <h3 style="font-size:1rem;margin-bottom:1rem;">IPO Table — all menu options</h3>
+      <div class="card" style="overflow-x:auto;margin-bottom:2rem;">
+        <table>
+          <thead><tr><th>Menu Option</th><th>Input</th><th>Processing</th><th>Output</th><th>Error Handling</th></tr></thead>
+          <tbody>
+            <tr><td>1 — Browse tutors</td><td>Subject filter (1–6), or 0 for all</td><td>Filter TUTORS array by subject index</td><td>Formatted tutor list with names, rates, ratings</td><td>If input &lt; 0 or &gt; 6: "Invalid choice — enter 0–6"</td></tr>
+            <tr><td>2 — Book a session</td><td>Tutor ID (1–6), hours (1–4)</td><td>price = tutor.rate × hours; total = price × 1.10 (platform fee)</td><td>Session summary with total cost in Rands</td><td>Hours &lt; 1 or &gt; 4: "Enter 1 to 4 hours"; non-integer: re-prompt</td></tr>
+            <tr><td>3 — View cart</td><td>None</td><td>Iterate cart array, sum totals</td><td>Itemised list: tutor, hours, price each; subtotal</td><td>Empty cart: "No sessions added yet."</td></tr>
+            <tr><td>4 — Checkout</td><td>Name (String), Email (String), confirm Y/N</td><td>Validate email format; calculate final total; simulate payment</td><td>Booking confirmation with reference number</td><td>Invalid email: re-prompt. 'N': return to menu.</td></tr>
+            <tr><td>5 — Exit</td><td>None</td><td>Print farewell message; System.exit(0)</td><td>"Thank you for using SkillBridge SA!"</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:1rem;margin-bottom:1rem;">Pseudocode — main program loop</h3>
+      <div class="cb">
+PROGRAM SkillBridgeSA
+  DECLARE tutors AS array of Tutor objects
+  DECLARE cart AS ArrayList of Session
+  DECLARE running AS boolean = TRUE
+
+  DISPLAY welcome banner
+
+  WHILE running = TRUE DO
+    DISPLAY menu options (1–5)
+    INPUT choice (integer)
+
+    IF choice is not an integer THEN
+      DISPLAY "Error: please enter a whole number between 1 and 5"
+      CONTINUE
+    END IF
+
+    IF choice &lt; 1 OR choice &gt; 5 THEN
+      DISPLAY "Error: " + choice + " is not a valid option. Enter 1–5."
+      CONTINUE
+    END IF
+
+    SWITCH choice
+      CASE 1: CALL browseTutors()
+      CASE 2: CALL bookSession()
+      CASE 3: CALL viewCart()
+      CASE 4: CALL checkout()
+      CASE 5: DISPLAY "Goodbye!"; running = FALSE
+    END SWITCH
+  END WHILE
+END PROGRAM
+
+FUNCTION bookSession()
+  INPUT tutorID (1–6)
+  VALIDATE: if tutorID &lt; 1 OR tutorID &gt; 6 THEN re-prompt (loop)
+  INPUT hours (1–4)
+  VALIDATE: if hours &lt; 1 OR hours &gt; 4 THEN re-prompt (loop)
+
+  SET rate = tutors[tutorID - 1].hourlyRate
+  SET subtotal = rate × hours
+  SET platformFee = subtotal × 0.10
+  SET total = subtotal + platformFee
+
+  DISPLAY "Tutor: " + tutors[tutorID-1].name
+  DISPLAY "Duration: " + hours + " hour(s)"
+  DISPLAY "Subtotal: R" + subtotal
+  DISPLAY "Platform fee (10%): R" + platformFee
+  DISPLAY "Total: R" + total
+  ADD session to cart
+END FUNCTION
+
+FUNCTION checkout()
+  IF cart is empty THEN
+    DISPLAY "Your cart is empty. Book a session first."
+    RETURN
+  END IF
+  INPUT name (String) — VALIDATE not blank
+  INPUT email (String) — VALIDATE contains "@" and "."
+  DISPLAY order summary
+  INPUT confirm (Y or N)
+  IF confirm = "Y" THEN
+    GENERATE random 6-digit reference
+    DISPLAY "Booking confirmed! Ref: SKB-" + reference
+    CLEAR cart
+  ELSE
+    DISPLAY "Checkout cancelled. Cart preserved."
+  END IF
+END FUNCTION</div>
+
+      <div class="dv"></div>
+      <h3 style="font-size:1rem;margin-bottom:0.5rem;">Interactive Java Terminal Simulation</h3>
+      <p style="font-size:0.84rem;margin-bottom:1rem;">Type a menu number (1–5) and press Enter or click Run. This simulates the Java program's input validation and menu logic.</p>
+      <div class="term">
+        <div class="term-hdr">SkillBridgeSA.java — Terminal</div>
+        <div class="term-body" id="termBody"></div>
+        <div class="term-input-row">
+          <span class="term-prompt">Enter &gt;</span>
+          <input class="term-in" id="termIn" type="text" placeholder="type 1–5 then press Enter" onkeydown="if(event.key==='Enter')runJava()">
+          <button class="term-sub" onclick="runJava()">Run</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>`;
+}
+
+function contactPage() {
+  return `
+  <div style="padding-top:80px;">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container" style="max-width:660px;">
+      <div class="sl">Contact Us</div>
+      <h2 style="margin-bottom:0.5rem;">Get in touch</h2>
+      <p style="margin-bottom:2rem;">Questions about the platform? Want to become a tutor? Send us a message.</p>
+      <div class="card">
+        <form id="contactForm" onsubmit="submitContact(event)">
+          <div class="g2" style="gap:1rem;">
+            <div class="fg">
+              <label class="fl">First Name *</label>
+              <input class="fi" id="cf-fname" type="text" placeholder="Lerato">
+              <div class="em" id="err-fname"></div>
+            </div>
+            <div class="fg">
+              <label class="fl">Last Name *</label>
+              <input class="fi" id="cf-lname" type="text" placeholder="Mokoena">
+              <div class="em" id="err-lname"></div>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="fl">Email Address *</label>
+            <input class="fi" id="cf-email" type="email" placeholder="lerato@student.tut.ac.za">
+            <div class="em" id="err-email"></div>
+          </div>
+          <div class="fg">
+            <label class="fl">I am a…</label>
+            <select class="fi" id="cf-role">
+              <option value="">Select an option</option>
+              <option>Student looking for a tutor</option>
+              <option>Student wanting to become a tutor</option>
+              <option>Lecturer / institution</option>
+              <option>Investor / partner</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl">Message *</label>
+            <textarea class="fi" id="cf-msg" rows="4" placeholder="Tell us how we can help you…" style="resize:vertical;"></textarea>
+            <div class="em" id="err-msg"></div>
+          </div>
+          <button type="submit" class="btn btn-p" style="width:100%;">Send Message</button>
+        </form>
+      </div>
+      <div class="dv"></div>
+      <div class="g3" style="font-size:0.85rem;">
+        ${[['📍 Address','Soshanguve Campus, Tshwane University of Technology, Gauteng'],
+           ['📧 Email','hello@skillbridge.co.za'],
+           ['📱 WhatsApp','0712 345 678 (Mon–Fri 8am–6pm)']
+        ].map(([i,v])=>`<div class="card"><p style="color:var(--acc);font-size:0.85rem;margin-bottom:0.25rem;">${i}</p><p style="font-size:0.82rem;">${v}</p></div>`).join('')}
+      </div>
+    </div>
+  </section>
+  </div>`;
+}
+
+// ========== CART ==========
+function toggleCart() {
+  cartOpen = !cartOpen;
+  document.getElementById('cartPanel').classList.toggle('open', cartOpen);
+  if (cartOpen) renderCart();
+}
+
+async function addToCart(id, hours) {
+  const data = await apiPost('/api/cart/add', {tutorId: id, hours: hours});
+  if (!data || data.error) { showToast('❌ ' + (data ? data.message : 'Server not reachable')); return; }
+  showToast(`✓ ${data.item.tutorName} (${hours}h) added — R${data.item.total.toFixed(2)}`);
+  const countEl = document.getElementById('cart-count');
+  if (countEl) countEl.textContent = data.cartSize;
+  if (cartOpen) renderCart();
+}
+
+async function removeFromCart(idx) {
+  const data = await apiPost('/api/cart/remove', {index: idx});
+  if (!data || data.error) { showToast('❌ ' + (data ? data.message : 'Server not reachable')); return; }
+  showToast('Removed: ' + data.removed.tutorName);
+  renderCart();
+}
+
+async function renderCart() {
+  const body  = document.getElementById('cartBody');
+  const count = document.getElementById('cart-count');
+  const total = document.getElementById('cart-total');
+  if (!body) return;
+
+  const data = await apiGet('/api/cart');
+  if (!data) { body.innerHTML = offlineBanner(); return; }
+
+  if (count) count.textContent = data.itemCount;
+  if (!data.itemCount) {
+    body.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;text-align:center;margin-top:2rem;">No sessions booked yet.</p>';
+    if (total) total.textContent = 'R 0';
+    return;
+  }
+  if (total) total.textContent = 'R ' + data.sessionsTotal.toFixed(2);
+  const COLOURS = {1:'#F5A623',2:'#00D4AA',3:'#A78BFA',4:'#F472B6',5:'#34D399',6:'#FB923C'};
+  const INITIALS = {1:'TN',2:'AD',3:'KM',4:'SZ',5:'NS',6:'LC'};
+  body.innerHTML = data.items.map((c,i) => `
+    <div class="ci">
+      <div class="av" style="width:38px;height:38px;font-size:0.75rem;background:${COLOURS[c.tutorId]||'#555'};color:#000;">${INITIALS[c.tutorId]||'??'}</div>
+      <div class="ci-info">
+        <div style="font-size:0.85rem;font-weight:500;">${c.tutorName}</div>
+        <div style="font-size:0.78rem;color:var(--muted);">${c.hours}h × R${c.rate} + 10% fee</div>
+        <div style="font-size:0.85rem;color:var(--acc);font-weight:600;">R${c.total.toFixed(2)}</div>
+      </div>
+      <button class="ci-rm" onclick="removeFromCart(${i})">✕</button>
+    </div>`).join('');
+}
+async function checkout() {
+  // Get cart from backend first
+  const cartData = await apiGet('/api/cart');
+  if (!cartData || !cartData.itemCount) {
+    showToast('Cart is empty — book a session first');
+    return;
+  }
+  // Show checkout modal
+  document.getElementById('modalContent').innerHTML = `
+    <h3 style="margin-bottom:1.25rem;">Complete your booking</h3>
+    <div class="fg"><label class="fl">Full Name *</label>
+      <input class="fi" id="co-name" placeholder="Lerato Mokoena"></div>
+    <div class="fg"><label class="fl">Student Number *</label>
+      <input class="fi" id="co-snum" placeholder="20261234" maxlength="9"></div>
+    <div class="fg"><label class="fl">Email Address *</label>
+      <input class="fi" id="co-email" placeholder="lerato@student.tut.ac.za"></div>
+    <div class="card" style="margin:1rem 0;padding:1rem;">
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.4rem;">
+        <span>Sessions total</span><span>R${cartData.sessionsTotal.toFixed(2)}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--muted);margin-bottom:0.4rem;">
+        <span>Subscription (R99/mo)</span><span>R${cartData.subscription.toFixed(2)}</span></div>
+      <div style="border-top:1px solid var(--bdr);margin:0.5rem 0;"></div>
+      <div style="display:flex;justify-content:space-between;font-weight:600;">
+        <span>Grand Total</span>
+        <span style="color:var(--acc);">R${cartData.grandTotal.toFixed(2)}</span>
+      </div>
+    </div>
+    <div class="em" id="co-err" style="margin-bottom:0.75rem;"></div>
+    <button class="btn btn-p" style="width:100%;" onclick="submitCheckout()">Confirm &amp; Pay</button>`;
+  document.getElementById('bookModal').classList.add('open');
+}
+
+async function submitCheckout() {
+  const name  = document.getElementById('co-name').value.trim();
+  const snum  = document.getElementById('co-snum').value.trim();
+  const email = document.getElementById('co-email').value.trim();
+  const err   = document.getElementById('co-err');
+
+  if (!name)                                   { err.textContent='Name is required.'; return; }
+  if (!/^\d{8,9}$/.test(snum))                { err.textContent='Student number must be 8-9 digits.'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent='Enter a valid email address.'; return; }
+  err.textContent = '';
+
+  const data = await apiPost('/api/checkout', {name, studentNumber: snum, email});
+  if (!data || data.error) {
+    err.textContent = data ? data.message : 'Server not reachable.';
+    return;
+  }
+  // Success
+  document.getElementById('modalContent').innerHTML = `
+    <div style="text-align:center;padding:1.5rem 0;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">✅</div>
+      <h3>Booking Confirmed!</h3>
+      <p style="margin-top:0.5rem;margin-bottom:1rem;">${data.message}</p>
+      <div style="background:var(--surf2);border-radius:8px;padding:1rem;">
+        <div style="font-family:var(--fh);font-size:1.4rem;color:var(--acc);">${data.reference}</div>
+        <p style="font-size:0.82rem;margin-top:0.25rem;">Your reference number</p>
+      </div>
+      <p style="font-size:0.82rem;margin-top:1rem;">Grand total: <strong style="color:var(--acc);">R${data.grandTotal}</strong></p>
+      <button class="btn btn-o btn-sm" style="margin-top:1rem;" onclick="closeModal()">Close</button>
+    </div>`;
+
+  // Refresh cart count
+  const cartInfo = await apiGet('/api/cart');
+  const countEl = document.getElementById('cart-count');
+  if (countEl && cartInfo) countEl.textContent = cartInfo.itemCount;
+  renderCart();
+  if (cartOpen) toggleCart();
+
+  // If analytics page is open, auto-refresh the live stats
+  const analyticsEl = document.getElementById('analytics-content');
+  if (analyticsEl) renderAnalytics();
+  showToast('✓ Order ' + data.reference + ' confirmed!');
+}
+
+// ========== BOOKING MODAL — fetches from Java ==========
+async function openBookModal(id) {
+  document.getElementById('modalContent').innerHTML =
+    '<p style="color:var(--muted);padding:1rem;">Loading...</p>';
+  document.getElementById('bookModal').classList.add('open');
+  const t = await apiGet('/api/tutors/' + id);
+  if (!t || t.error) { document.getElementById('modalContent').innerHTML = offlineBanner(); return; }
+  const COLOURS = {1:'#F5A623',2:'#00D4AA',3:'#A78BFA',4:'#F472B6',5:'#34D399',6:'#FB923C'};
+  const INITIALS = {1:'TN',2:'AD',3:'KM',4:'SZ',5:'NS',6:'LC'};
+  const bg = COLOURS[t.id]||'#555'; const init = INITIALS[t.id]||'??';
+  document.getElementById('modalContent').innerHTML = `
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+      <div class="av" style="background:${bg};color:#000;width:52px;height:52px;font-size:0.95rem;">${init}</div>
+      <div>
+        <h3 style="font-size:1.05rem;">${t.name}</h3>
+        <span class="badge">${t.subject}</span>
+      </div>
+    </div>
+    <div class="fg">
+      <label class="fl">Number of hours (1–4)</label>
+      <select class="fi" id="bk-hrs">
+        <option value="1">1 hour — R${(t.rate*1.1).toFixed(0)} total (incl. fee)</option>
+        <option value="2">2 hours — R${(t.rate*2*1.1).toFixed(0)} total</option>
+        <option value="3">3 hours — R${(t.rate*3*1.1).toFixed(0)} total</option>
+        <option value="4">4 hours — R${(t.rate*4*1.1).toFixed(0)} total</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl">Session date</label>
+      <input class="fi" type="date" id="bk-date" min="${new Date().toISOString().split('T')[0]}">
+    </div>
+    <div class="card" style="margin:1rem 0;padding:1rem;">
+      <div style="display:flex;justify-content:space-between;font-size:0.84rem;margin-bottom:0.4rem;"><span>Hourly rate</span><span>R${t.rate}/hr</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:0.84rem;margin-bottom:0.4rem;color:var(--muted);"><span>Platform fee (10%)</span><span id="bk-fee">R${(t.rate*0.1).toFixed(2)}</span></div>
+      <div class="dv" style="margin:0.5rem 0;"></div>
+      <div style="display:flex;justify-content:space-between;font-weight:600;"><span>Total</span><span id="bk-total" style="color:var(--acc);">R${(t.rate*1.1).toFixed(2)}</span></div>
+    </div>
+    <button class="btn btn-p" style="width:100%;" onclick="confirmBook(${id})">Add to Cart</button>`;
+  document.getElementById('bk-hrs').onchange = function() {
+    const h = parseInt(this.value);
+    document.getElementById('bk-fee').textContent = 'R'+(t.rate*h*0.1).toFixed(2);
+    document.getElementById('bk-total').textContent = 'R'+(t.rate*h*1.1).toFixed(2);
+  };
+}
+async function confirmBook(id) {
+  const h = parseInt(document.getElementById('bk-hrs').value);
+  closeModal();
+  await addToCart(id, h);
+  if (!cartOpen) toggleCart();
+}
+function closeModal() {
+  document.getElementById('bookModal').classList.remove('open');
+}
+
+// ========== CONTACT FORM ==========
+function submitContact(e) {
+  e.preventDefault();
+  let valid = true;
+  const fields = [
+    {id:'cf-fname',err:'err-fname',msg:'First name is required.'},
+    {id:'cf-lname',err:'err-lname',msg:'Last name is required.'},
+    {id:'cf-msg',err:'err-msg',msg:'Please enter your message.'},
+  ];
+  fields.forEach(f=>{
+    const el = document.getElementById(f.id);
+    const er = document.getElementById(f.err);
+    if (!el.value.trim()) { el.classList.add('err'); er.textContent = f.msg; valid=false; }
+    else { el.classList.remove('err'); er.textContent=''; }
+  });
+  const email = document.getElementById('cf-email');
+  const eerr = document.getElementById('err-email');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    email.classList.add('err'); eerr.textContent='Please enter a valid email address.'; valid=false;
+  } else { email.classList.remove('err'); eerr.textContent=''; }
+  if (valid) {
+    document.getElementById('contactForm').innerHTML = `<div style="text-align:center;padding:3rem 1rem;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">✅</div>
+      <h3>Message sent!</h3>
+      <p style="margin-top:0.5rem;">Thank you. We'll get back to you within 1 business day.</p>
+    </div>`;
+    showToast('Message sent successfully!');
+  }
+}
+
+// ========== TOAST ==========
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+// ========== CHARTS — driven by live Java data ==========
+function initCharts(live, demand) {
+  if (charts.revenue) { charts.revenue.destroy(); }
+  if (charts.demand)  { charts.demand.destroy(); }
+
+  const opts = () => ({
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:true, labels:{color:'#6B7280',font:{size:11}}}},
+    scales:{
+      x:{ticks:{color:'#6B7280',font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},
+      y:{ticks:{color:'#6B7280',font:{size:10}},grid:{color:'rgba(255,255,255,0.06)'}}
+    }
+  });
+
+  // Revenue breakdown — session vs subscription (pie/doughnut)
+  const rc = document.getElementById('revenueChart');
+  if (rc) {
+    charts.revenue = new Chart(rc, {
+      type: 'doughnut',
+      data: {
+        labels: ['Session Revenue', 'Subscription Revenue'],
+        datasets:[{
+          data: [live.sessionRevenue, live.subscriptionRevenue],
+          backgroundColor: ['rgba(245,166,35,0.8)', 'rgba(0,212,170,0.8)'],
+          borderColor: ['#F5A623','#00D4AA'],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{display:true, position:'bottom',
+          labels:{color:'#9CA3AF',font:{size:11},padding:12}}}
+      }
+    });
+  }
+
+  // Subject demand — live booking counts
+  const dc = document.getElementById('demandChart');
+  if (dc) {
+    charts.demand = new Chart(dc, {
+      type:'bar',
+      data:{
+        labels: demand.map(d=>d.subject),
+        datasets:[{
+          label:'Bookings',
+          data: demand.map(d=>d.bookings),
+          backgroundColor:['rgba(245,166,35,0.7)','rgba(0,212,170,0.7)',
+            'rgba(167,139,250,0.7)','rgba(244,114,182,0.7)',
+            'rgba(52,211,153,0.7)','rgba(251,146,60,0.7)'],
+          borderRadius:4, borderWidth:0
+        }]
+      },
+      options:{...opts(), indexAxis:'y',
+        plugins:{legend:{display:false}}}
+    });
+  }
+}
+
+
+// ========== JAVA TERMINAL ==========
+let termState = 'menu';
+let termCart = [];
+let termBooking = {};
+
+function initTerminal() {
+  termState = 'menu';
+  termCart = [];
+  termBooking = {};
+  const body = document.getElementById('termBody');
+  if (!body) return;
+  body.innerHTML = '';
+  tp('hdr','=== SkillBridge SA v1.0 — Student Skills Marketplace ===');
+  tp('info','Welcome! Please choose an option from the menu below.');
+  showMenu();
+}
+
+function showMenu() {
+  tp('hdr','\n--- MAIN MENU ---');
+  tp('','1. Browse tutors');
+  tp('','2. Book a session');
+  tp('','3. View cart');
+  tp('','4. Checkout');
+  tp('','5. Exit');
+  tp('info','Enter your choice (1–5):');
+  termState = 'menu';
+}
+
+function tp(cls, txt) {
+  const body = document.getElementById('termBody');
+  if (!body) return;
+  const p = document.createElement('p');
+  p.className = cls;
+  p.textContent = txt;
+  body.appendChild(p);
+  body.scrollTop = body.scrollHeight;
+}
+
+function runJava() {
+  const inp = document.getElementById('termIn');
+  if (!inp) return;
+  const val = inp.value.trim();
+  inp.value = '';
+  tp('', '> ' + val);
+
+  if (termState === 'menu') {
+    const n = parseInt(val);
+    if (isNaN(n) || n < 1 || n > 5) {
+      tp('err', '❌ Invalid input: "' + val + '". Please enter a number between 1 and 5.');
+      return;
+    }
+    if (n === 1) {
+      tp('hdr','\n--- AVAILABLE TUTORS ---');
+      TUTORS.forEach(t=>tp('',`[${t.id}] ${t.name.padEnd(20)} | ${t.subject.padEnd(28)} | R${t.rate}/hr | ★${t.rating}`));
+      tp('info','Type any key to return to menu.');
+      termState = 'browse';
+    } else if (n === 2) {
+      tp('info','\nEnter tutor ID (1–6) to book:');
+      termState = 'book_id';
+    } else if (n === 3) {
+      tp('hdr','\n--- YOUR CART ---');
+      if (!termCart.length) { tp('err','Cart is empty. Book a session first.'); }
+      else {
+        termCart.forEach((c,i)=>tp('',`${i+1}. ${c.name} — ${c.hours}h — R${c.total.toFixed(2)}`));
+        tp('info','Total: R' + termCart.reduce((a,c)=>a+c.total,0).toFixed(2));
+      }
+      tp('info','Press Enter to return to menu.'); termState='browse';
+    } else if (n === 4) {
+      if (!termCart.length) { tp('err','Cart is empty.'); return; }
+      tp('info','\nEnter your name to confirm booking:'); termState='checkout_name';
+    } else if (n === 5) {
+      tp('hdr','\nThank you for using SkillBridge SA! Goodbye. 👋');
+      tp('info','(Type "restart" to run again.)'); termState='done';
+    }
+  } else if (termState === 'browse') {
+    showMenu();
+  } else if (termState === 'book_id') {
+    const id = parseInt(val);
+    if (isNaN(id) || id < 1 || id > 6) { tp('err','❌ Invalid tutor ID. Enter 1–6.'); return; }
+    termBooking.tutor = TUTORS.find(t=>t.id===id);
+    tp('info',`Tutor: ${termBooking.tutor.name} — R${termBooking.tutor.rate}/hr`);
+    tp('info','Enter number of hours (1–4):'); termState='book_hrs';
+  } else if (termState === 'book_hrs') {
+    const h = parseInt(val);
+    if (isNaN(h) || h < 1 || h > 4) { tp('err','❌ Invalid hours. Enter 1, 2, 3 or 4.'); return; }
+    const sub = termBooking.tutor.rate * h;
+    const fee = sub * 0.10;
+    const total = sub + fee;
+    tp('',`\nSubtotal:       R${sub.toFixed(2)}`);
+    tp('',`Platform fee (10%): R${fee.toFixed(2)}`);
+    tp('hdr',`Total:          R${total.toFixed(2)}`);
+    termCart.push({name:termBooking.tutor.name, hours:h, total});
+    tp('info','✓ Session added to cart!'); termBooking={};
+    showMenu();
+  } else if (termState === 'checkout_name') {
+    if (!val) { tp('err','❌ Name cannot be blank.'); return; }
+    termBooking.name = val;
+    tp('info','Enter your email address:'); termState='checkout_email';
+  } else if (termState === 'checkout_email') {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { tp('err','❌ Invalid email. Must contain "@" and "."'); return; }
+    const total = termCart.reduce((a,c)=>a+c.total,0);
+    const ref = 'SKB-' + Math.floor(100000+Math.random()*900000);
+    tp('',`\nBooking confirmed for ${termBooking.name} (${val})`);
+    tp('hdr',`Reference: ${ref}`);
+    tp('hdr',`Total charged: R${total.toFixed(2)}`);
+    tp('info','✓ Confirmation SMS sent. Thank you!');
+    termCart=[]; termBooking={};
+    showMenu();
+  } else if (termState === 'done') {
+    if (val.toLowerCase()==='restart') initTerminal();
+  }
+}
+
+// ========== INIT ==========
+nav('home');
+document.getElementById('bookModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
