@@ -41,7 +41,7 @@ public class SkillBridgeServer {
     // ============================================================
     //  CONSTANTS — fixed platform parameters
     // ============================================================
-    static final int    PORT                = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+    static final int    PORT                = System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 8080;
     static final double PLATFORM_FEE_RATE   = 0.10;
     static final double SUBSCRIPTION_PRICE  = 99.00;
     static final double TUTOR_PREMIUM       = 199.00;
